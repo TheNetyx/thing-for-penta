@@ -134,6 +134,8 @@ setInterval(function() {
         if (!data.data) {
           notifyPlayerWhenMoveAvailable = false;
           alert ("the next round has started");
+          /* lazy way to update scoreboard */
+          location.reload();
           getRound();
         }
       }

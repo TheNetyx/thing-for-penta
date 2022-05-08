@@ -6,11 +6,22 @@ class RoundsController < ApplicationController
   def get_round
     render json: {data: Round.first[:round]}
   end
-
+=begin
   def get_score
     render json: {data: Round.first["t#{params[:teamid]}s".to_sym]}
   end
 
+  def get_score_all
+    render json: {data: [
+      Round.first[:t1s],
+      Round.first[:t2s],
+      Round.first[:t3s],
+      Round.first[:t4s],
+      Round.first[:t5s],
+      Round.first[:t6s]
+    ]}
+  end
+=end
   def check_sub
     render json: {data: Round.first["t#{params[:teamid]}".to_sym]}
   end
