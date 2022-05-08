@@ -90,6 +90,7 @@ class RoundsController < ApplicationController
 
     if @game[:state] == RoundsConf::STATE_CONFLICTING
       # conflict state -> move state
+
       @game.state = RoundsConf::STATE_ACCEPT_MOVES
       # check for remaining conflicts - do not allow admin overriding
       # this probably isnt a very efficient way of doing things.
@@ -101,14 +102,13 @@ class RoundsController < ApplicationController
       # creating a model isn't the most elegant solution, but it is a solution
       ItemRequest.all.each do |req|
         self.class.process req[:team], req[:item], req[:targetcell], req[:targetplayer]
-#        req.processed = true
         req.save
       end
       ItemRequest.destroy_all
 
       @locations = []
-      Player.all.each do |p|
-        @locations.push({x: p.xpos, y: p.ypos}) if p.alive
+      Player.where("alive = true").each do |p|
+        @locations.push({x: p.xpos, y: p.ypos})
       end
       if @locations.detect{ |e| @locations.count(e) > 1 } && ! all_same_team(@locations)
         flash[:notice] = ["unresolved conflicts"]

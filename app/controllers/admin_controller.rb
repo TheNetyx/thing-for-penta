@@ -60,11 +60,11 @@ class AdminController < ApplicationController
   end
 
   private
-  def get_conflicts
+  def get_conflicts # TODO: unretardify this.
     conflicts = []
     locations = []
-    Player.order(:team).order(:name).each do |tp|
-      locations.push({player: tp, locid: tp.xpos * 9 + tp.ypos}) if tp.alive
+    Player.where("alive = true").order(:team).order(:name).each do |tp|
+      locations.push({player: tp, locid: tp.xpos * 9 + tp.ypos})
     end
     while locations.length > 0
       sameloc = [locations[0][:player]]
@@ -79,7 +79,8 @@ class AdminController < ApplicationController
       end
 
       if sameloc.length > 1
-        conflicts.push({combatants: sameloc})
+        t = sameloc[1].team
+        conflicts.push({combatants: sameloc}) unless sameloc.all?{|i| i.team == t}
       end
       locations.each do |loc|
         if loc[:locid] == locid
