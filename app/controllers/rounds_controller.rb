@@ -82,6 +82,16 @@ class RoundsController < ApplicationController
       @game.state = RoundsConf::STATE_ACCEPT_MOVES
       # check for remaining conflicts - do not allow admin overriding
       # this probably isnt a very efficient way of doing things.
+
+      # items take effect here.
+      ItemLog.destroy_all
+      # creating a model isn't the most elegant solution, but it is a solution
+      ItemRequest.where("processed = ?",  false).each do |req|
+        self.class.process req[:team], req[:item], req[:targetcell], req[:targetplayer]
+        req.processed = true
+        req.save
+      end
+
       @locations = []
       Player.all.each do |p|
         @locations.push({x: p.xpos, y: p.ypos}) if p.alive
@@ -143,15 +153,6 @@ class RoundsController < ApplicationController
         p.xpos = GridConf::TEAM_BASES[p.team - 1][:x]
         p.ypos = GridConf::TEAM_BASES[p.team - 1][:y]
         p.save
-      end
-
-      # items take effect here.
-      ItemLog.destroy_all
-      # creating a model isn't the most elegant solution, but it is a solution
-      ItemRequest.where("processed = ?",  false).each do |req|
-        self.class.process req[:team], req[:item], req[:targetcell], req[:targetplayer]
-        req.processed = true
-        req.save
       end
     else
       # move state -> conflict state
