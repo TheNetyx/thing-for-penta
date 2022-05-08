@@ -23,3 +23,16 @@ class ItemConf
     {identifier: 4, name: "teleporter", fields: FieldsConstants::ALIV | FieldsConstants::NOCP}
   ]
 end
+
+# yes, team names are hard coded in because i'm lazy
+class TeamConf
+  NAMES = [
+    nil, # a r r a y   i n d i c e s   s t a r t   a t   1
+    "納稅黨",
+    "阿婆底褲",
+    "Miao",
+    "404ERROR",
+    "忍者小靈精",
+    "LAG GEI",
+  ]
+end

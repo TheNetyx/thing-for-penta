@@ -95,13 +95,16 @@ class RoundsController < ApplicationController
       # this probably isnt a very efficient way of doing things.
 
       # items take effect here.
+      # known bug: respawn messages get deleted. i'm not gonna fix this, it's not
+      # game breaking and i can't be bothered to deal with it.
       ItemLog.destroy_all
       # creating a model isn't the most elegant solution, but it is a solution
-      ItemRequest.where("processed = ?",  false).each do |req|
+      ItemRequest.all.each do |req|
         self.class.process req[:team], req[:item], req[:targetcell], req[:targetplayer]
-        req.processed = true
+#        req.processed = true
         req.save
       end
+      ItemRequest.destroy_all
 
       @locations = []
       Player.all.each do |p|
@@ -220,13 +223,13 @@ class RoundsController < ApplicationController
         p.respawn_round = Round.first[:round] + 2
         kills += 1 if p.save
       end
-      add_item_log "team #{t} bombed #{c}, killing #{kills}"
+      add_item_log "team #{t} (#{TeamConf::NAMES[t]}) bombed #{c}, killing #{kills}"
 
     # locator
     when 1
       coords = c.split "-"
       count = Player.where("xpos = ?", coords[1].to_i).where("ypos = ?", coords[2].to_i).count
-      add_item_log "team #{t} revealed #{count} enemies on square #{c}"
+      add_item_log "team #{t}  (#{TeamConf::NAMES[t]}) revealed #{count} enemies on square #{c}"
 
     # instant respawn is number 2, skip
 
@@ -237,7 +240,7 @@ class RoundsController < ApplicationController
       round = Round.first
       round["t#{team}s".to_sym] -= 10
       round.save
-      add_item_log "team #{t} used minus points card on team #{team}"
+      add_item_log "team #{t} (#{TeamConf::NAMES[t]}) used minus points card on team #{team} (#{TeamConf::NAMES[team]}) "
 
     # teleporter
     when 4
@@ -246,15 +249,9 @@ class RoundsController < ApplicationController
       player.xpos = coords[1].to_i
       player.ypos = coords[2].to_i
       player.save
-      add_item_log "team #{t} teleported #{player[:name]} to #{c}"
+      add_item_log "team #{t} (#{TeamConf::NAMES[t]}) teleported #{player[:name]} to #{c}"
     else
-      add_item_log "ERR: team #{t} used an invalid item"
+      add_item_log "ERR: team #{t} (#{TeamConf::NAMES[t]}) used an invalid item"
     end
   end
-end
-
-def add_item_log message
-  i = ItemLog.new
-  i[:message] = message
-  i.save
 end

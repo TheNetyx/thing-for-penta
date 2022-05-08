@@ -9,7 +9,7 @@
     <% c[:combatants].each do |com| %>
       <tr>
         <td><%=com.name%></td>
-        <td><%=com.team%></td>
+        <td><%="#{com.team}(#{TeamConf::NAMES[com.team]})"%></td>
         <td><%= form_with url: kill_player_path(com.id), method: :post do |f| f.submit "KILL" end %></td>
       </tr>
     <% end %>

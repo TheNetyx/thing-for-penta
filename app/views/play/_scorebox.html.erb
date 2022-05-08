@@ -2,7 +2,7 @@
   <tr><th>Team</th><th>Score</th></tr>
   <% (1..6).each do |i| %>
     <tr>
-      <td class=<%="team#{i}"%>><%= i %></td>
+      <td class=<%="team#{i}"%>><%= "#{i} (#{TeamConf::NAMES[i]})" %></td>
       <td><%=@scores[i - 1]%></td>
     </tr>
   <% end %>

@@ -1,12 +1,12 @@
 <table>
   <tr>
     <th>Item</th>
-    <th>Team 1</th>
-    <th>Team 2</th>
-    <th>Team 3</th>
-    <th>Team 4</th>
-    <th>Team 5</th>
-    <th>Team 6</th>
+    <% (1..6).each do |i| %>
+      <th>
+        <%="Team #{i}"%><br/>
+        <%="#{TeamConf::NAMES[i]}"%>
+      </th>
+    <% end %>
   </tr>
   <% @items.each do |item| %>
     <tr>

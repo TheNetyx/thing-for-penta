@@ -27,4 +27,10 @@ class ApplicationController < ActionController::Base
   def auth_for_acc_with_id
     true
   end
+
+  def add_item_log message
+    i = ItemLog.new
+    i[:message] = message
+    i.save
+  end
 end

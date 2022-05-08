@@ -11,7 +11,7 @@
   <% @players.each do |p| %>
     <tr class="team<%= p.team %>">
       <td><%= p.name %></td>
-      <td><%= p.team %></td>
+      <td><%= "#{p.team} (#{TeamConf::NAMES[p.team]})" %></td>
       <td><%= p.xpos %></td>
       <td><%= p.ypos %></td>
       <td><%= p.alive ? "Y" : "N" %></td> <%# the two 'links' below are forms because i need them to POST%>

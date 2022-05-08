@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag "map" %>
 <div>
-  <h1>Team <%= @teamid %></h1>
+  <h1><%= "Team #{@teamid} (#{TeamConf::NAMES[@teamid.to_i]})" %></h1>
   <h3 id="round-counter"></h3>
   <%= form_with url: update_players_path, method: :post, html: {onsubmit: "event.preventDefault();submitForm(this)"} do |f| %>
     <%= f.hidden_field :data, id: "response-input" %>
