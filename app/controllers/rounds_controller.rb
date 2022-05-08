@@ -116,45 +116,38 @@ class RoundsController < ApplicationController
       end
       # calculate scores
       @scores = [0, 0, 0, 0, 0, 0]
-      cp_oneguyin = false
       GridConf::CHECKPOINTS.each do |cp|
-        Player.all.each do |p|
-          if (cp[:x] == p.xpos) && (cp[:y] == p.ypos)
-            if !cp_oneguyin
-              @scores[p.team - 1] += GridConf::CP_POINTS if p.alive
-              cp_oneguyin = true
-            else
-              @scores[p.team - 1] += Integer(GridConf::CP_POINTS.to_f / 2) if p.alive
-              break
-            end
-          end
+        collection = Player.where("xpos = ? AND ypos = ? AND alive = true", cp[:x], cp[:y])
+        if collection.count <= 0
+          break
+        elsif collection.count == 1
+          @scores[collection.first.team - 1] += GridConf::CP_POINTS
+        else
+          @scores[collection.first.team - 1] += (GridConf::CP_POINTS * 1.5).to_i
         end
       end
-      cp_oneguyin = false
 
       GridConf::SUPER_CHECKPOINTS.each do |cp|
-        Player.all.each do |p|
-          if (cp[:x] == p.xpos) && (cp[:y] == p.ypos)
-            if !cp_oneguyin
-              @scores[p.team - 1] += GridConf::SUPER_CP_POINTS if p.alive
-              cp_oneguyin = true
-            else
-              @scores[p.team - 1] += Integer(GridConf::SUPER_CP_POINTS.to_f / 2) if p.alive
-              break
-            end
+        GridConf::CHECKPOINTS.each do |cp|
+          collection = Player.where("xpos = ? AND ypos = ? AND alive = true", cp[:x], cp[:y])
+          if collection.count <= 0
+            break
+          elsif collection.count == 1
+            @scores[collection.first.team - 1] += GridConf::SUPER_CP_POINTS
+          else
+            @scores[collection.first.team - 1] += (GridConf::SUPER_CP_POINTS * 1.5).to_i
           end
         end
       end
 
       GridConf::TEAM_BASES.each do |cp|
-        Player.all.each do |p|
-          if (cp[:x] == p.xpos) && (cp[:y] == p.ypos) && ((GridConf::TEAM_BASES.find_index cp) + 1 != p.team)
-            # index of @scores and GridConf::TEAM_BASES are all 1 less than te teamid
-            @scores[GridConf::TEAM_BASES.find_index cp] -= GridConf::ENEMY_IN_BASE_PENALTY if p.alive
-            break
-          end
+        collection = Player.where("xpos = ? AND ypos = ? AND alive = true", cp[:x], cp[:y])
+        if collection.count > 0
+          @scores[GridConf::TEAM_BASES.find_index cp] -= GridConf::ENEMY_IN_BASE_PENALTY
         end
+        break
       end
+
       # this is probably not the best way to do this, but somehow
       # doing clever shit causes 'cannot coerce nil to float' errors
       # so im doing it the retarded way

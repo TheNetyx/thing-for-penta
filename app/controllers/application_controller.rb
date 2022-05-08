@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     true
   end
 
-  def add_item_log message
+  def self.add_item_log message
     i = ItemLog.new
     i[:message] = message
     i.save

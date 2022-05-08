@@ -28,7 +28,7 @@ class ItemsController < ApplicationController
           p = Player.find params[:targetplayer]
           p.alive = true
           p.save
-          add_item_log "team #{params[:teamid]} (#{TeamConf::NAMES[params[:teamid].to_i]}) used respawn on #{p.name}"
+          self.class.add_item_log "team #{params[:teamid]} (#{TeamConf::NAMES[params[:teamid].to_i]}) used respawn on #{p.name}"
         end
       else
         flash[:notice] = ["missing or invalid field(s)"]
