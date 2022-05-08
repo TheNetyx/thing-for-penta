@@ -33,3 +33,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# yeah the old method of handling logins was very retarded
+# not saying that the new method isn't retarded, but it's somewhat less so
+/config/login_envvar.rb

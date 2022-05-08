@@ -102,20 +102,32 @@ class RoundsController < ApplicationController
       end
       # calculate scores
       @scores = [0, 0, 0, 0, 0, 0]
+      cp_oneguyin = false
       GridConf::CHECKPOINTS.each do |cp|
         Player.all.each do |p|
           if (cp[:x] == p.xpos) && (cp[:y] == p.ypos)
-            @scores[p.team - 1] += GridConf::CP_POINTS if p.alive
-            break
+            if !cp_oneguyin
+              @scores[p.team - 1] += GridConf::CP_POINTS if p.alive
+              cp_oneguyin = true
+            else
+              @scores[p.team - 1] += Integer(GridConf::CP_POINTS.to_f / 2) if p.alive
+              break
+            end
           end
         end
       end
+      cp_oneguyin = false
 
       GridConf::SUPER_CHECKPOINTS.each do |cp|
         Player.all.each do |p|
           if (cp[:x] == p.xpos) && (cp[:y] == p.ypos)
-            @scores[p.team - 1] += GridConf::SUPER_CP_POINTS if p.alive
-            break
+            if !cp_oneguyin
+              @scores[p.team - 1] += GridConf::SUPER_CP_POINTS if p.alive
+              cp_oneguyin = true
+            else
+              @scores[p.team - 1] += Integer(GridConf::SUPER_CP_POINTS.to_f / 2) if p.alive
+              break
+            end
           end
         end
       end
@@ -212,7 +224,7 @@ class RoundsController < ApplicationController
       coords = c.split "-"
       team = GridConf::TEAM_BASES.index({x: coords[1].to_i, y: coords[2].to_i}) + 1
       round = Round.first
-      round["t#{team}s".to_sym] -= 5
+      round["t#{team}s".to_sym] -= 10
       round.save
       add_item_log "team #{t} used minus points card on team #{team}"
 
