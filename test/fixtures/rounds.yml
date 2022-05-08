@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  round: 1
+  t1: false
+  t2: false
+  t3: false
+  t4: false
+  t5: false
+  t6: false
+
+two:
+  round: 1
+  t1: false
+  t2: false
+  t3: false
+  t4: false
+  t5: false
+  t6: false

@@ -1,0 +1,17 @@
+<%# totally didnt steal this from https://codepen.io/gpyne/pen/npdQgW %>
+
+<%= stylesheet_link_tag "hexagon" %>
+<%= stylesheet_link_tag "hexagon_players" %>
+
+<% i = 0 %>
+<div class="honeycomb">
+  <% (1..7).each do |y| %>
+    <div class="ibws-fix">
+      <% (1..9).each do |x| %>
+        <div class="<%= GridConf::GRID_NAME[GridConf::GRID_CONF[i]]%><%i += 1 %>">
+          <div class="hexagontent" id="cell-<%= "#{x}-#{y}" %>"></div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

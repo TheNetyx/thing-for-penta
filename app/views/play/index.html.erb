@@ -1,0 +1,25 @@
+<%= stylesheet_link_tag "map" %>
+<div>
+  <h1>Team <%= @teamid %></h1>
+  <h3 id="round-counter"></h3>
+  <%= form_with url: update_players_path, method: :post, html: {onsubmit: "event.preventDefault();submitForm(this)"} do |f| %>
+    <%= f.hidden_field :data, id: "response-input" %>
+    <%= f.submit "Confirm all moves" %>
+  <% end %>
+
+  <%= render "play/item_menu" %>
+
+  <div id="info-area-anchor">
+    <div id="info-area">
+      <%= render "play/scorebox" %>
+    </div>
+    <%= render "shared/hexgrid" %>
+  </div>
+
+
+  <%# VERY ugly hack, but i dont know the 'right' way to do this :< %>
+  <%= render "play/js" %>
+
+  <%= javascript_include_tag "custom/move_players_u" %>
+  <%= javascript_include_tag "custom/move_players" %>
+</div>

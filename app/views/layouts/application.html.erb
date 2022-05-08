@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Strgy</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div id="notices">
+      <% if flash[:notice] %>
+        <% flash[:notice].each do |mesg| %>
+          <div id="flash-message"><%= mesg %></div>
+        <% end %>
+      <% end %>
+    </div>
+    <%= yield %>
+  </body>
+</html>

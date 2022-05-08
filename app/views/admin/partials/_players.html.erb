@@ -1,0 +1,58 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Team</th>
+    <th>X</th>
+    <th>Y</th>
+    <th>Alive</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @players.each do |p| %>
+    <tr class="team<%= p.team %>">
+      <td><%= p.name %></td>
+      <td><%= p.team %></td>
+      <td><%= p.xpos %></td>
+      <td><%= p.ypos %></td>
+      <td><%= p.alive ? "Y" : "N" %></td> <%# the two 'links' below are forms because i need them to POST%>
+      <td><%= form_with url: kill_player_path(p.id), method: :post do |f| f.submit p.alive ? "KILL" : "REVIVE" end %></td>
+      <td><%= form_with url: delete_player_path(p.id), method: :post do |f| f.submit "DELETE" end %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= form_with(model: @new_player, url: create_player_path, method: :post) do |f| %>
+  <fieldset>
+    <legend>Create new player</legend>
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name %> <br />
+
+    <%= f.radio_button :team, "1" %>
+    <%= f.label :team_1, "Team 1" %>
+    <%= f.radio_button :team, "2" %>
+    <%= f.label :team_2, "Team 2" %>
+    <%= f.radio_button :team, "3" %>
+    <%= f.label :team_3, "Team 3" %>
+    <%= f.radio_button :team, "4" %>
+    <%= f.label :team_4, "Team 4" %>
+    <%= f.radio_button :team, "5" %>
+    <%= f.label :team_5, "Team 5" %>
+    <%= f.radio_button :team, "6" %>
+    <%= f.label :team_6, "Team 6" %>
+    <br />
+<!--
+    <%= f.label :xpos, "X" %>
+    <%= f.text_field :xpos %> <br />
+
+    <%= f.label :ypos, "Y" %>
+    <%= f.text_field :ypos %> <br />
+
+    <%= f.radio_button :alive, "true" %>
+    <%= f.label :alive_true, "Alive" %>
+    <%= f.radio_button :alive, "false" %>
+    <%= f.label :alive_false, "Dead" %>
+    <br />
+-->
+    <%= f.submit "submit" %>
+  </fieldset>
+<% end %>

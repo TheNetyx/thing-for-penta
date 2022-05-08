@@ -1,0 +1,13 @@
+<table>
+  <tr><th>Team</th><th>Moved</th><th>Score</th></tr>
+  <% (1..6).each do |i| %>
+    <tr>
+      <td><%= i %></td>
+      <td id=<%="team#{i}-moved"%>></td>
+      <td><%=@scores[i - 1]%></td>
+    </tr>
+  <% end %>
+</table>
+<tr><td>Status: <%=@round.state == 0 ? "responding" : "conflicting"%></td></tr>
+</table>
+<%= render "admin/partials/rounds_advance_form" %>

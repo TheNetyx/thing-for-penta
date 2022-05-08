@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  xpos: 1
+  ypos: 1
+  team: 1
+  alive: false
+
+two:
+  name: MyString
+  xpos: 1
+  ypos: 1
+  team: 1
+  alive: false

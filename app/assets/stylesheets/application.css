@@ -1,0 +1,17 @@
+#notices {
+  background-color: darkkhaki;
+  color: black;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+.invisborder {
+  border: 0;
+}
+
+.negative {
+  background-color: red;
+  color: white;
+}

@@ -1,0 +1,10 @@
+<% if @round == nil %>
+  <h3>game not started</h3>
+<% else %>
+  <h3>game started, on round <%= @round[:round] %>, currently <%=@round[:state] == 0 ? "accepting responses" : "handling conflicts"%></h3>
+  <%= render "admin/partials/rounds_advance_form" %>
+<% end %>
+
+<%= form_with url: start_game_path, method: :post do |f| %>
+  <%= f.submit @round ? "Restart game" : "Start game" %>
+<% end %>

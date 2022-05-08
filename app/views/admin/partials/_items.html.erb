@@ -1,0 +1,33 @@
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Team 1</th>
+    <th>Team 2</th>
+    <th>Team 3</th>
+    <th>Team 4</th>
+    <th>Team 5</th>
+    <th>Team 6</th>
+  </tr>
+  <% @items.each do |item| %>
+    <tr>
+      <td><%= item[:name] %></td>
+      <% item[:count].each_with_index do |count, index| %>
+        <td>
+          <table class="invisborder"><tr>
+            <td class="invisborder"><%= count %></td>
+            <td class="invisborder"><%= form_with url: add_item_path(index + 1) do |f| %>
+              <%= f.hidden_field :itemid, value: item[:id] %>
+              <%= f.hidden_field :quantity, value: 1 %>
+              <%= f.submit "+" %>
+            <% end %></td>
+            <td class="invisborder"><%= form_with url: add_item_path(index + 1) do |f| %>
+              <%= f.hidden_field :itemid, value: item[:id] %>
+              <%= f.hidden_field :quantity, value: -1 %>
+              <%= f.submit "-" %>
+            <% end %></td>
+          </tr></table>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

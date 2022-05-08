@@ -1,0 +1,2 @@
+class ItemRequest < ApplicationRecord
+end

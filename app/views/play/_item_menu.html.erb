@@ -1,0 +1,20 @@
+<%= form_with url: use_item_path, as: :useitems do |f| %>
+  <fieldset>
+  <legend>Use item</legend>
+    <% @items.each do |item| %>
+      <%= f.radio_button :itemid, item[:identifier] %>
+      <%= f.label "itemid_#{item[:identifier]}".to_sym, "#{item[:name]}(#{item["t#{@teamid}".to_sym]})" %>
+    <% end %>
+    <br />
+
+    <button type="button" onclick="setPlayerOnClick(&quot;select&quot;)">Pick target player</button>
+    <%= f.text_field :targetplayer, id: "player-field", readonly: true %>
+    <br />
+
+    <button type="button" onclick="setHexagonOnClick(&quot;select&quot;)">Pick target cell</button>
+    <%= f.text_field :targetcell, id: "cell-field", readonly: true %>
+    <br />
+
+    <%= f.submit "confirm" %>
+  </fieldset>
+<% end %>
