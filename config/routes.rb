@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get   "/api/round-number",            to: "rounds#get_round",     as: :get_round
   get   "/api/check-sub/:teamid",       to: "rounds#check_sub",     as: :submission_check
   post  "/api/start-game",              to: "rounds#start",         as: :start_game
-  post  "/api/advance-round",           to: "rounds#advance",       as: :advance_round
+  get  "/api/advance-round",           to: "rounds#advance",       as: :advance_round
   get   "/api/check-sub-all",           to: "rounds#check_sub_all", as: :check_sub_all
 #  get   "/api/get-score-all",           to: "rounds#get_score_all", as: :get_score_all
 
