@@ -94,6 +94,8 @@ class RoundsController < ApplicationController
       @game.state = RoundsConf::STATE_ACCEPT_MOVES
       # check for remaining conflicts - do not allow admin overriding
       # this probably isnt a very efficient way of doing things.
+
+# items caused errors, so it's temporarily
 =begin
       # items take effect here.
       # known bug: respawn messages get deleted. i'm not gonna fix this, it's not
