@@ -94,7 +94,7 @@ class RoundsController < ApplicationController
       @game.state = RoundsConf::STATE_ACCEPT_MOVES
       # check for remaining conflicts - do not allow admin overriding
       # this probably isnt a very efficient way of doing things.
-
+=begin
       # items take effect here.
       # known bug: respawn messages get deleted. i'm not gonna fix this, it's not
       # game breaking and i can't be bothered to deal with it.
@@ -105,7 +105,7 @@ class RoundsController < ApplicationController
         req.save
       end
       ItemRequest.destroy_all
-
+=end
       @locations = []
       Player.where("alive = true").each do |p|
         @locations.push({x: p.xpos, y: p.ypos})
