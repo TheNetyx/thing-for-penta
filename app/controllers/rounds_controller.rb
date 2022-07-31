@@ -121,7 +121,7 @@ class RoundsController < ApplicationController
       GridConf::CHECKPOINTS.each do |cp|
         collection = Player.where("xpos = ? AND ypos = ? AND alive = true", cp[:x], cp[:y])
         if collection.count <= 0
-          break
+          # nothing here
         elsif collection.count == 1
           @scores[collection.first.team - 1] += GridConf::CP_POINTS
         else
@@ -132,7 +132,7 @@ class RoundsController < ApplicationController
       GridConf::SUPER_CHECKPOINTS.each do |cp|
         collection = Player.where("xpos = ? AND ypos = ? AND alive = true", cp[:x], cp[:y])
         if collection.count <= 0
-          break
+          # nothing here
         elsif collection.count == 1
           @scores[collection.first.team - 1] += GridConf::SUPER_CP_POINTS
         else
