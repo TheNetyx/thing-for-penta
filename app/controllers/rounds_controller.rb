@@ -145,7 +145,6 @@ class RoundsController < ApplicationController
         if collection.count > 0
           @scores[GridConf::TEAM_BASES.find_index cp] -= GridConf::ENEMY_IN_BASE_PENALTY
         end
-        break
       end
 
       # this is probably not the best way to do this, but somehow
